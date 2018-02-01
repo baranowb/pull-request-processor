@@ -80,7 +80,7 @@ public class SetLabelsAction implements Action {
 
         @Override
         public Void call() throws Exception {
-            //TODO: XXX cross check REMOVE list vs CURRENT list to avoid mute removal
+            // TODO: XXX cross check REMOVE list vs CURRENT list to avoid mute removal
             final PullRequestData pullRequestData = data.getAttributeValue(EvaluatorData.Attributes.PULL_REQUEST_CURRENT);
             final IssueData issueData = data.getAttributeValue(EvaluatorData.Attributes.ISSUE_CURRENT);
             final LabelData labelsData = data.getAttributeValue(EvaluatorData.Attributes.LABELS_CURRENT);
@@ -93,7 +93,7 @@ public class SetLabelsAction implements Action {
 
             final List<LabelItem<?>> addList = labelsData.getLabels(LabelAction.SET);
             final List<LabelItem<?>> removeList = labelsData.getLabels(LabelAction.REMOVE);
-            //TODO: XXX make this part of super class, "AbstractConsoleReporting" or something.
+            // TODO: XXX make this part of super class, "AbstractConsoleReporting" or something.
             // or something more generic avavilable for whole tool/s
             final StringBuilder logBuilder = new StringBuilder();
             logBuilder.append("\n... " + pullRequestData.getPullRequest().getURL());
@@ -111,10 +111,14 @@ public class SetLabelsAction implements Action {
                 final List<LabelItem<?>> upstreamRemoveList = upstreamLabelsData.getLabels(LabelAction.REMOVE);
                 // just for info ?
                 logBuilder.append("\n   |... Upstream ");
-                logBuilder.append("\n       |... " + (upstreamIssueData.isDefined() ? upstreamIssueData.getIssue().getURL() : "n/a"));
-                logBuilder.append("\n       |... C:" + upstreamLabels.stream().map(l -> l.getName()).collect(Collectors.toList()));
-                logBuilder.append("\n       |... S:" + upstreamAddList.stream().map(l -> l.getLabel()).collect(Collectors.toList()));
-                logBuilder.append("\n       |... R:" + upstreamRemoveList.stream().map(l -> l.getLabel()).collect(Collectors.toList()));
+                logBuilder.append(
+                        "\n       |... " + (upstreamIssueData.isDefined() ? upstreamIssueData.getIssue().getURL() : "n/a"));
+                logBuilder.append(
+                        "\n       |... C:" + upstreamLabels.stream().map(l -> l.getName()).collect(Collectors.toList()));
+                logBuilder.append(
+                        "\n       |... S:" + upstreamAddList.stream().map(l -> l.getLabel()).collect(Collectors.toList()));
+                logBuilder.append(
+                        "\n       |... R:" + upstreamRemoveList.stream().map(l -> l.getLabel()).collect(Collectors.toList()));
             }
             if (!actionContext.isWritePermitted() || !actionContext.isWritePermitedOn(pullRequestData.getPullRequest())) {
                 logBuilder.append("\n   |... Write: <<Skipped>>");
@@ -170,7 +174,7 @@ public class SetLabelsAction implements Action {
     }
 
     private static class LabelComparator implements Comparator<Label> {
-        //Label comparator - to have it neat and possiblt, if Git retain order, to have it always the same way?
+        // Label comparator - to have it neat and possiblt, if Git retain order, to have it always the same way?
         @Override
         public int compare(Label o1, Label o2) {
             if (o1 == null) {
